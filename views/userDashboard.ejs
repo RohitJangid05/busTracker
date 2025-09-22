@@ -1,0 +1,84 @@
+<link rel="stylesheet" href="/css/userDashboard.css">
+<%- include('partials/head') %>
+
+  <body>
+    <%- include('partials/navbar') %>
+
+      <header>
+        <h1>User Dashboard</h1>
+        <p style="text-align: end; font-size: 10px;">Click on the station name to mark the pickup point</p>
+      </header>
+
+      <main class="container">
+        <h1>Bus Routes</h1>
+
+        <% buses.forEach(bus=> { %>
+          <div class="bus-card <%= (bus.busStatus == "cancelled" || bus.bookingStatus==false) ? "cannot-book" : "" %>">
+
+            <!-- Top Section -->
+            <div class="bus-header">
+              <div>
+                <h3 class="bus-title">
+                  <%= bus.busNumber %>
+                </h3>|
+                <h3 class="<%= bus.busStatus==="ontime" ? "on-time" : bus.busStatus==="delayed" ? "delayed" :
+                  bus.busStatus==="cancelled" ? "cancelled" : "" %>">
+                  <%= bus.busStatus==="ontime" ? "On Time" : bus.busStatus==="delayed" ? "Delayed" :
+                    bus.busStatus==="cancelled" ? "Cancelled" : "" %>
+                </h3>|
+                <h3 class="<%= bus.bookingStatus==true?" seats-available":"no-more-booking" %>">
+                  <%= bus.bookingStatus==true?"Seats Available":"No More Booking" %>
+                </h3>
+              </div>
+              <i class="bus-icon fa-solid fa-bus-simple"></i>
+            </div>
+            <hr style="height: 2px; border: none; background-color: gray;">
+
+            <!-- Progress bar -->
+            <ul class="progressbar">
+              <% bus.route.forEach(station=> { %>
+                <li
+                  class="<%= station.status === 'previous' ? 'completed' : (station.status === 'current' ? 'active' : '') %>">
+
+                  <!-- Each station has its own form -->
+                  <form method="post" action="/user/add-pickup/<%= bus._id %>/<%= station._id %>">
+                    <button type="submit" class="station-li-btn">
+                      <p class="station-li">
+                        <span class="route-name">
+                          <%= station.stationName %>
+                        </span>
+                        <span class="route-time">
+                          <%= station.time %>
+                        </span>
+                      </p>
+
+                      <!-- Running man icon if this is pickup -->
+
+                      <i id="<%= pickup && station.stationName === pickup.pickupStation && bus.busNumber === pickup.busNumber ? '' : 'bus-icon' %>"
+                        class="fa-solid fa-person-running"></i>
+
+                      <!-- Bus icon if this is pickup -->
+                      <% if(!(station.status==='current' )){%>
+                        <i id="<%= pickup && station.stationName === pickup.pickupStation && bus.busNumber === pickup.busNumber ? '' : 'bus-icon' %>"
+                          class="fa-solid fa-bus-simple"></i>
+                        <% } %>
+
+                          <!-- Bus icon if this is current station -->
+                          <i id="<%= station.status === 'current' ? '' : 'bus-icon' %>"
+                            class="fa-solid fa-bus-simple"></i>
+                    </button>
+                  </form>
+                </li>
+                <% }) %>
+            </ul>
+          </div>
+          <% }) %>
+      </main>
+      <% if (alertMessage) { %>
+        <script>
+          alert("<%= alertMessage %>");
+        </script>
+        <% } %>
+
+          <%- include('partials/footer') %>
+  </body>

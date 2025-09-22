@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head') %>
+  <link rel="stylesheet" href="/css/home.css">
+
+  <body>
+    <%- include('partials/navbar') %>
+
+      <div id="main-container">
+        <!-- Hero Section -->
+      <header class="hero">
+        <div class="hero-content">
+          <h1>Welcome to TrackOn</h1>
+          <p>Track your bus in real-time, plan routes, and never miss a ride again.</p>
+          <a href="/login" class="btn">Get Started</a>
+        </div>
+      </header>
+
+      <!-- Features Section -->
+      <!-- Features Section -->
+      <section class="features">
+        <h2>Why Choose TrackOn?</h2>
+        <div class="features-container">
+          <div class="feature">
+            <i class="fa-solid fa-bus"></i>
+            <h3>Real-Time Tracking</h3>
+            <p>Track buses live on the map and know exactly where your ride is.</p>
+          </div>
+          <div class="feature">
+            <i class="fa-solid fa-route"></i>
+            <h3>Route Planning</h3>
+            <p>Find the best bus routes to your destination with ease.</p>
+          </div>
+          <div class="feature">
+            <i class="fa-solid fa-clock"></i>
+            <h3>Save Time</h3>
+            <p>Get accurate ETAs and avoid waiting at bus stops unnecessarily.</p>
+          </div>
+          <div class="feature">
+            <i class="fa-solid fa-user-shield"></i>
+            <h3>Safe & Reliable</h3>
+            <p>Ride with confidence knowing safety and reliability are our top priorities.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Call-to-Action -->
+      <section class="cta">
+        <h2>Ready to ride smarter?</h2>
+        <p>Join TrackOn today and simplify your daily commute.</p>
+        <a href="/signup" class="btn">Sign Up</a>
+      </section>
+      <%- include('partials/footer') %>
+      </div>
+
+  </body>
+ <script>
+  // Register ScrollTrigger
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero Section (on page load)
+  let tl = gsap.timeline();
+  tl.from(".hero-content h1", {
+      y: 80,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out"
+    })
+    .from(".hero-content p", {
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      ease: "power2.out"
+    }, "-=0.5")
+    .from(".hero-content .btn", {
+      scale: 0.5,
+      opacity: 0,
+      duration: 0.8,
+      ease: "back.out(1.7)"
+    }, "-=0.3");
+
+  // Features Section (scroll reveal)
+  gsap.from(".feature", {
+    scrollTrigger: {
+      trigger: ".features-container",
+      start: "top 80%",   // when top of section hits 80% of viewport
+      toggleActions: "play none none none" // play only once
+    },
+    y: 60,
+    opacity: 0,
+    duration: 1,
+    stagger: 0.3, // animate one by one
+    ease: "power2.out"
+  });
+
+  // CTA Section (scroll reveal)
+  gsap.from(".cta h2, .cta p, .cta .btn", {
+    scrollTrigger: {
+      trigger: ".cta",
+      start: "top 80%"
+    },
+    y: 70,
+    opacity: 0,
+    duration: 1.2,
+    stagger: 0.2,
+    ease: "power3.out"
+  });
+</script>
+
+</html>

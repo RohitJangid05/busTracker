@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head') %>
+    <link rel="stylesheet" href="/css/about.css">
+
+    <body>
+        <%- include('partials/navbar') %>
+
+            <!-- About Section -->
+
+            <div id="main-container">
+                <!-- Hero Section -->
+                <section class="about-hero">
+                    <div class="about-content">
+                        <h1>About Us</h1>
+                        <p>Your smart companion for hassle-free commuting.</p>
+                        <p>
+                            With <strong>TrackMyBus</strong>, you no longer need to wait endlessly at bus stops.
+                            We provide real-time tracking, accurate arrival times, and route planning
+                            so you can travel with confidence and ease every day.
+                        </p>
+                        <a href="/signup" class="btn">Get Started</a>
+                    </div>
+                </section>
+
+
+                <!-- Mission Section -->
+                <section class="about-section">
+                    <h2>Our Mission</h2>
+                    <p>
+                        At <strong>TrackOn</strong>, we aim to make daily commuting easier,
+                        smarter, and more reliable. No more waiting endlessly at bus stops—
+                        with real-time tracking, accurate ETAs, and route planning, we ensure
+                        you get where you need to go on time.
+                    </p>
+                </section>
+
+                <!-- Features Highlight -->
+                <section class="about-section features">
+                    <h2>What We Offer</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <i class="fa-solid fa-bus"></i>
+                            <h3>Real-Time Tracking</h3>
+                            <p>Always know where your bus is and when it’s arriving.</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <h3>Smart Route Planning</h3>
+                            <p>Find the best routes to save time and avoid delays.</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fa-solid fa-users"></i>
+                            <h3>For Everyone</h3>
+                            <p>Whether you're a student, professional, or traveler—BusTracker is for you.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Vision Section -->
+                <section class="about-section">
+                    <h2>Our Vision</h2>
+                    <p>
+                        We believe in building a future where public transport is easy to use,
+                        reliable, and accessible to everyone. By connecting technology with
+                        everyday travel, we’re transforming the way people commute.
+                    </p>
+                </section>
+
+                <!-- Call to Action -->
+                <section class="about-cta">
+                    <h2>Ready to ride smarter?</h2>
+                    <a href="/signup" class="btn">Join Now</a>
+                </section>
+                <%- include('partials/footer') %>
+            </div>
+
+
+        </body>
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+ 
+  let heroTl = gsap.timeline();
+  heroTl.from(".about-content h1", {
+    y: 80,
+    opacity: 0,
+    duration: 1,
+    ease: "power3.out"
+  })
+  .from(".about-content p", {
+    y: 40,
+    opacity: 0,
+    duration: 0.8,
+    ease: "power2.out",
+    stagger: 0.2
+  }, "-=0.5")
+  .from(".about-content .btn", {
+    scale: 0.6,
+    opacity: 0,
+    duration: 0.8,
+    ease: "back.out(1.7)"
+  }, "-=0.3");
+
+  // 🟢 Mission Section
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: ".about-section:nth-of-type(1)",
+      start: "top 75%",
+    }
+  })
+  .from(".about-section:nth-of-type(1) h2", {
+    y: 60,
+    opacity: 0,
+    duration: 1,
+    ease: "power3.out"
+  })
+  .from(".about-section:nth-of-type(1) p", {
+    y: 40,
+    opacity: 0,
+    duration: 0.8,
+    ease: "power2.out"
+  }, "-=0.4");
+
+  // 🟢 Features Grid
+  gsap.from(".feature-card", {
+    scrollTrigger: {
+      trigger: ".feature-grid",
+      start: "top 90%",
+    },
+    y: 70,
+    opacity: 0,
+    duration: 1,
+    ease: "power2.out",
+    stagger: 0.3
+  });
+
+  // 🟢 Vision Section
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: ".about-section:nth-of-type(2)",
+      start: "top 75%",
+    }
+  })
+  .from(".about-section:nth-of-type(2) h2", {
+    y: 60,
+    opacity: 0,
+    duration: 1,
+    ease: "power3.out"
+  })
+  .from(".about-section:nth-of-type(2) p", {
+    y: 40,
+    opacity: 0,
+    duration: 0.8,
+    ease: "power2.out"
+  }, "-=0.4");
+
+</script>
+
+</html>

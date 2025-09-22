@@ -1,0 +1,283 @@
+/* ---------------- Header ---------------- */
+header {
+  background: #c4d4d8;
+  color: #2c3e50;
+  padding: 1rem;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ---------------- Container ---------------- */
+.container {
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 2rem auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+h2 {
+  color: #2c3e50;
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+/* ---------------- Form (Add Bus Section) ---------------- */
+form {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.label-holder {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 200px;
+}
+
+.label-holder label {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #34495e;
+}
+
+input,
+select {
+  padding: 0.65rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+input:focus,
+select:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 6px rgba(74, 144, 226, 0.3);
+  outline: none;
+}
+
+/* ---------------- Buttons ---------------- */
+button {
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* Primary (Add Bus) */
+button[type="submit"] {
+  background: #28a745;
+  color: #fff;
+}
+
+button[type="submit"]:hover {
+  background: #218838;
+  transform: translateY(-2px);
+}
+
+/* Secondary (Update button in table) */
+table button {
+  background: #007bff;
+  color: #fff;
+}
+
+table button:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Delete button */
+#delete-bus {
+  background: none;
+  color: #e74c3c;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+#delete-bus:hover {
+  color: #c0392b;
+}
+
+/* ---------------- Bus List Table ---------------- */
+.bus-title-section{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.bus-title-section>div{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th,
+td {
+  padding: 0.9rem;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+  vertical-align: middle;
+}
+
+th {
+  background: #2c3e50;
+  color: white;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.4px;
+}
+
+tbody tr:nth-child(even) {
+  background: #f9fbfd;
+}
+
+tbody tr:hover {
+  background: #f1f7ff;
+  transition: background 0.2s ease;
+}
+
+.bus-section {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* ---------------- Form inside table cell ---------------- */
+td form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+td select,
+td form button {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+/* ---------------- Status dropdown colors ---------------- */
+td select option[value="current"] {
+  background: #28a745;
+  color: #fff;
+}
+
+td select option[value="next"] {
+  background: #ffc107;
+  color: #000;
+}
+
+td select option[value="previous"] {
+  background: #6c757d;
+  color: #fff;
+}
+
+/* ---------------- Status classes ---------------- */
+.current-class {
+  background: #28a746c9;
+  color: #fff;
+  text-transform: capitalize;
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+}
+
+.next-class {
+  background: #ffc107a8;
+  color: #000;
+  text-transform: capitalize;
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+}
+
+.previous-class {
+  background: #6c757dc4;
+  color: #fff;
+  text-transform: capitalize;
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+}
+
+
+.status-form {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.status-form .form-group,
+.status-form button {
+  flex: 1; /* 👈 makes each item take equal space */
+  display: flex;
+  flex-direction: column;
+}
+
+.status-form label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #444;
+}
+
+.status-form select,
+.status-form button {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.95rem;
+}
+
+.status-form select:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+.status-form button {
+  align-self: flex-end; /* aligns button with bottom of inputs */
+  background: #28a745;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.status-form button:hover {
+  background: #218838;
+}
+
+.on-time,.seats-available{
+  color: #068522;
+}
+.delayed, .cancelled,.no-more-booking{
+  color: red;
+}

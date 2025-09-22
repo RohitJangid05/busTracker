@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="/css/navbar.css">
+<link rel="stylesheet" href="/css/style.css">
+<nav class="navbar <%= form==="nav-bg"?"navbar-bg-img":"nav-bg" %>">
+  <a href="/" class="logo ">TrackOn</a>
+  <% if(form=="nav-bg" || !form){ %>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/<%= user ? user + '/dashboard' : 'login' %>">Dashboard</a>
+      </li>
+    </ul>
+    <% } %>
+
+      <% if(user){ %>
+        <div>
+          <a href="/logout" class="nav-btn">Logout</a>
+        </div>
+        <% }else{ %>
+          <div>
+            <a href="/login" class="nav-btn">Login</a>
+            <a href="/signup" class="nav-btn">Singup</a>
+          </div>
+          <% } %>
+</nav>

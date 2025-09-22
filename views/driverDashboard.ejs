@@ -1,0 +1,137 @@
+<link rel="stylesheet" href="/css/driverDashboard.css">
+<%- include('partials/head') %>
+
+  <body>
+    <%- include('partials/navbar') %>
+
+      <header>
+        <h1>Driver Dashboard</h1>
+      </header>
+
+      <div class="container">
+        <h2>Add Bus Details</h2>
+        <form action="/driver/add-bus-details" method="POST">
+          <div class="label-holder">
+            <label for="stationName">Station Name:</label>
+            <input type="text" id="stationName" name="stationName" placeholder="Station Name" required>
+          </div>
+          <div class="label-holder">
+            <label for="busNumber">Bus Number:</label>
+            <input type="text" id="busNumber" name="busNumber" placeholder="Eg: KA 22 Hf 7989" required>
+          </div>
+          <div class="label-holder">
+            <label for="status">Station Status:</label>
+            <select id="status" name="status" required>
+              <option value="">Status</option>
+              <option value="current">Current</option>
+              <option value="next">Next</option>
+              <option value="previous">Previous</option>
+            </select>
+          </div>
+          <div class="label-holder">
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="time" required>
+          </div>
+          <button type="submit">Add Bus</button>
+        </form>
+
+        <h2>Your Bus List :</h2>
+
+        <% buses.forEach(bus=> { %>
+          <div class="bus-section">
+            <div class="bus-title-section">
+              <div>
+                <h3 class="bus-title">
+                  <%= bus.busNumber %>
+                </h3>|
+                <h3 class="<%= bus.busStatus==="ontime" ? "on-time" : bus.busStatus==="delayed" ? "delayed" :
+                  bus.busStatus==="cancelled" ? "cancelled" : "" %>">
+                  <%= bus.busStatus==="ontime" ? "On Time" : bus.busStatus==="delayed" ? "Delayed" :
+                    bus.busStatus==="cancelled" ? "Cancelled" : "" %>
+                </h3>|
+                <h3 class="<%= bus.bookingStatus==true?"seats-available":" no-more-booking" %>">
+                  <%= bus.bookingStatus==true?"Seats Available":"No More Booking" %>
+                </h3>
+              </div>
+              <form action="/driver/delete-bus/<%= bus._id %>" method="POST">
+                <button id="delete-bus" type="submit"><i class="fa-solid fa-trash"></i></button>
+              </form>
+            </div>
+            <hr style="height: 2px; background-color: black; border: none;">
+            <form action="/driver/update-bus-status/<%= bus._id %>" method="post" class="status-form">
+              <div class="form-group">
+                <label for="busStatus">Bus Status:</label>
+                <select id="busStatus" name="busStatus" required>
+                  <option value="">Bus Status</option>
+                  <option value="ontime">On Time</option>
+                  <option value="delayed">Delayed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="bookingStatus">Booking Status:</label>
+                <select id="bookingStatus" name="bookingStatus" required>
+                  <option value="">Booking Status</option>
+                  <option value="true">Seats Available</option>
+                  <option value="false">No More Booking</option>
+                </select>
+              </div>
+
+              <button type="submit">Update Status</button>
+            </form>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Station Name</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                  <th>Update station Status</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% bus.route.forEach(route=> { %>
+                  <tr>
+                    <td>
+                      <%= route.stationName %>
+                    </td>
+                    <td>
+                      <%= route.time %>
+                    </td>
+                    <td class="<%= 
+                  route.status === 'current' 
+                    ? 'current-class' 
+                    : route.status === 'next' 
+                      ? 'next-class' 
+                      : 'previous-class' 
+                %>">
+                      <%= route.status %>
+                    </td>
+                    <td>
+                      <form action="/driver/update-status/<%= bus._id %>/<%= route._id %>" method="POST">
+                        <select name="status" required>
+                          <option value="">Status</option>
+                          <option value="current" <%=route.status==='current' ? 'selected' : '' %>>Current</option>
+                          <option value="next" <%=route.status==='next' ? 'selected' : '' %>>Next</option>
+                          <option value="previous" <%=route.status==='previous' ? 'selected' : '' %>>Previous</option>
+                        </select>
+                        <button type="submit">Update</button>
+                      </form>
+                    </td>
+                    <td>
+                      <form action="/driver/delete-bus-station/<%= bus._id %>/<%= route._id %>" method="POST">
+                        <button id="delete-bus" type="submit"><i class="fa-solid fa-trash"></i></button>
+                      </form>
+                    </td>
+                  </tr>
+                  <% }) %>
+              </tbody>
+            </table>
+          </div>
+          <% }) %>
+
+      </div>
+      <%- include('partials/footer') %>
+  </body>

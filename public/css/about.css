@@ -1,0 +1,114 @@
+/* Hero Section */
+#main-container {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+}
+
+.about-hero {
+    height: 70vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('/images/abt-us-bg.jpg') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+}
+
+.about-content {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.about-content p {
+  font-size: 1.1rem;
+  margin: 1rem 0;
+  line-height: 1.6;
+}
+
+.about-content .btn {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background: #ff9800;
+  color: #fff;
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.about-content .btn:hover {
+  background: #e68900;
+}
+
+
+/* Sections */
+.about-section {
+    max-width: 1000px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+.about-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #ff9800;
+}
+
+.about-section p {
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.6;
+}
+
+/* Feature Grid */
+.feature-grid {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.feature-card {
+    background: #f9f9f9;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 280px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card i {
+    font-size: 2rem;
+    color: #ff9800;
+    margin-bottom: 1rem;
+}
+
+/* CTA */
+.about-cta {
+    background: #ff9800;
+    color: #fff;
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.about-cta .btn {
+    background: #fff;
+    color: #ff9800;
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.about-cta .btn:hover {
+    background: #e68900;
+    color: #fff;
+}

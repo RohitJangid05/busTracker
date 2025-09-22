@@ -1,0 +1,178 @@
+header {
+  background: #c4d4d8;
+  color: #2c3e50;
+  padding: 1rem;
+  text-align: center;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+.bus-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.bus-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bus-header>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-form button:hover {
+  background: #218838;
+}
+
+.on-time,
+.seats-available {
+  color: #068522;
+}
+
+.delayed,
+.cancelled,
+.no-more-booking {
+  color: red;
+}
+
+
+.status {
+  margin-top: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.status.ontime {
+  color: green;
+}
+
+.status.delayed {
+  color: red;
+}
+
+.bus-icon {
+  font-size: 2rem;
+}
+
+/* Progress bar */
+.progressbar {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  margin: 30px 0 0;
+  padding: 0;
+  position: relative;
+}
+
+.progressbar li {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  font-size: 14px;
+  color: #333;
+}
+
+.station-li {
+  display: flex !important;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.route-name {
+  font-weight: bold;
+  text-transform: capitalize;
+  font-size: 14px;
+}
+
+.route-time {
+  font-size: 10px;
+}
+
+#bus-icon {
+  display: none !important;
+}
+
+.fa-bus-simple,
+.fa-person-running {
+  font-size: 22px;
+}
+
+.display-bus {
+  display: block;
+}
+
+.progressbar li:before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border: 2px solid green;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto 10px;
+  background: #fff;
+  z-index: 1;
+  position: relative;
+}
+
+.progressbar li:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: green;
+  top: 9px;
+  left: -50%;
+  z-index: 0;
+}
+
+.progressbar li.completed:after {
+  background: grey;
+}
+
+.progressbar li:first-child:after {
+  content: none;
+}
+
+/* Previous station */
+.progressbar li.completed:before {
+  border-color: grey;
+  background: grey;
+}
+
+.progressbar li.completed {
+  color: grey;
+}
+
+/*Current station */
+.progressbar li.active:before {
+  border-color: green;
+  background: green;
+}
+
+.progressbar li.active {
+  color: green;
+}
+
+.station-li-btn {
+  all: unset;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+
+}
+
+.cannot-book{
+  background: rgba(139, 0, 0, 0.332);
+}
