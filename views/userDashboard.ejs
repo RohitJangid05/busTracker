@@ -24,7 +24,7 @@
             <h1>Bus Routes</h1>
 
             <% buses.forEach(bus=> { %>
-              <div class="bus-card <%= (bus.busStatus == " cancelled" || bus.bookingStatus==false) ? "cannot-book" : ""
+              <div class="bus-card <%= (bus.busStatus == "cancelled" || bus.bookingStatus==false) ? "cannot-book" : ""
                 %>">
 
                 <!-- Top Section -->
@@ -33,7 +33,7 @@
                     <h3 class="bus-title">
                       <%= bus.busNumber %>
                     </h3>|
-                    <h3 class="<%= bus.busStatus===" ontime" ? "on-time" : bus.busStatus==="delayed" ? "delayed" :
+                    <h3 class="<%= bus.busStatus==="ontime" ? "on-time" : bus.busStatus==="delayed" ? "delayed" :
                       bus.busStatus==="cancelled" ? "cancelled" : "" %>">
                       <%= bus.busStatus==="ontime" ? "On Time" : bus.busStatus==="delayed" ? "Delayed" :
                         bus.busStatus==="cancelled" ? "Cancelled" : "" %>
