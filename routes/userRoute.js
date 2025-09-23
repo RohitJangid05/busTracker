@@ -5,8 +5,6 @@ let userModel = require("../model/userModel.js");
 
 let router = express.Router();
 
-let alertMessage = null
-
 async function authMiddleware(req, res, next) {
   let { token, user } = req.cookies;
   if (!token || user !== "user") return res.redirect("/login");
@@ -46,7 +44,7 @@ router.get("/dashboard", authMiddleware, async (req, res) => {
     pickup,
     user,
     form: null,
-    alertMessage
+
   });
 });
 
@@ -57,6 +55,7 @@ router.post("/add-pickup/:busId/:routeId", authMiddleware, async (req, res) => {
 
   try {
     let bus = await busModel.findById(busId);
+    let user = await userModel.findById(id)
 
     bus.route.sort((a, b) => {
       let timeA = new Date("1970/01/01 " + a.time);
@@ -65,23 +64,34 @@ router.post("/add-pickup/:busId/:routeId", authMiddleware, async (req, res) => {
     });
 
     if (!bus) return res.redirect("/user/dashboard");
+    if (!user) return res.redirect("/user/dashboard");
 
     let route = bus.route.id(routeId);
-
     if (!route) return res.redirect("/user/dashboard");
 
-    if (route.stationName === bus.route.at(-1).stationName) {
-      alertMessage = "Last Stop, Bus ends here, cannot mark this as pickup";
-    } else if (route.status !== "next") {
-      alertMessage = "Please mark your pickup point on the next station";
-    } else if (!bus.bookingStatus) {
-      alertMessage = "No more booking is accepted";
-    } else if (bus.busStatus == "cancelled") {
-      alertMessage = "Sorry, you cannot book as this bus is cancelled"
-    } else {
-      alertMessage = null
+    if (user.pickup.pickupStation == route.stationName && user.pickup.busNumber == bus.busNumber) {
+      await userModel.findByIdAndUpdate(
+        id,
+        { $unset: { pickup: "" } },
+        { new: true }
+      );
+       req.flash("alertMessage", "Pickup point removed");
+      return res.redirect('/user/dashboard')
     }
-    
+
+
+   if (route.stationName === bus.route.at(-1).stationName) {
+  req.flash("alertMessage", "Last Stop, Bus ends here, cannot mark this as pickup");
+} else if (route.status !== "next") {
+  req.flash("alertMessage", "Please mark your pickup point on the next station");
+} else if (!bus.bookingStatus) {
+  req.flash("alertMessage", "No more booking is accepted");
+} else if (bus.busStatus == "cancelled") {
+  req.flash("alertMessage", "Sorry, you cannot book as this bus is cancelled");
+} else {
+  req.flash("alertMessage", "Pickup point marked");
+}
+
     if (route.status === "next" && bus.bookingStatus && route.stationName != bus.route.at(-1).stationName && bus.busStatus !== "cancelled") {
       await userModel.findByIdAndUpdate(
         id,
