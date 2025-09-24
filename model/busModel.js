@@ -4,7 +4,7 @@ const busSchema = new mongoose.Schema({
     driver: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, 
     busNumber: { type: String, required: true },
     busStatus:{type: String, enum:["ontime","delayed","cancelled"], default:"ontime"},
-    bookingStatus:{type:Boolean, default:false},
+    bookingStatus:{type:Boolean, default:true},
     route: [
         {
             stationName: { type: String, required: true },

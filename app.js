@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
 const session = require("express-session");
 const flash = require("connect-flash");
+const jwt = require("jsonwebtoken")
 
 connectDB()
 let app = express()
@@ -36,20 +37,22 @@ app.use('/', authRoute)
 app.use("/user",userRoute)
 app.use("/driver",driverRoute)
 
+
 app.get('/', (req, res) => {
     let user;
-    if(req.cookies){
-        user = req.cookies.user
+    if(req.cookies.token){
+        user = jwt.verify(req.cookies.token,process.env.SECRET)
     }else{
         user = null
     }
+
     res.render("index", {title:"Trackon", user, form:"nav-bg"})
 })
 
 app.get('/about',(req,res)=>{
     let user;
-    if(req.cookies){
-        user = req.cookies.user
+    if(req.cookies.token){
+        user = jwt.verify(req.cookies.token,process.env.SECRET)
     }else{
         user = null
     }
@@ -58,6 +61,4 @@ app.get('/about',(req,res)=>{
 
 
 let port = process.env.PORT || 3000
-app.listen(port, () => {
-    console.log(`Your server is running at http://localhost:${port}`)
-})
+app.listen(port)

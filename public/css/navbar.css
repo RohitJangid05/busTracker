@@ -1,4 +1,6 @@
-/* Navbar container */
+/* =========================
+   Navbar Styles
+   ========================= */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -7,27 +9,36 @@
   padding: 1rem 2rem;
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 1100;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
-.navbar-bg-img{
+/* Transparent navbar (homepage style) */
+.navbar-bg-img {
   background: transparent;
 }
 
-.nav-bg{
+/* Solid navbar */
+.nav-bg {
   background: #2c3e50;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
 /* Logo */
 .logo {
   text-decoration: none;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: bold;
   color: #ff9800;
   cursor: pointer;
+  letter-spacing: 1px;
+  transition: color 0.3s;
+}
+.logo:hover {
+  color: #ffa733;
 }
 
-/* Navigation links */
+/* Nav links */
 .nav-links {
   list-style: none;
   display: flex;
@@ -38,14 +49,19 @@
   color: #fff;
   text-decoration: none;
   font-size: 1rem;
-  transition: color 0.3s ease;
+  font-weight: 500;
+  padding-bottom: 2px;
+  transition: color 0.3s ease, border-bottom 0.3s;
 }
 
 .nav-links li a:hover {
   color: #ff9800;
+  border-bottom: 2px solid #ff9800;
 }
 
-/* Buttons (Login & Signup) */
+/* =========================
+   Navbar Buttons
+   ========================= */
 .nav-btn {
   margin-left: 1rem;
   padding: 0.5rem 1.2rem;
@@ -62,7 +78,6 @@
   border: 1px solid #ff9800;
   color: #ff9800;
 }
-
 .nav-btn[href="/login"]:hover {
   background: #ff9800;
   color: #fff;
@@ -73,40 +88,151 @@
   background: #ff9800;
   color: #fff;
 }
-
-.nav-btn[href="/logout"] {
-  background: red;
-  color: #fff;
-}
-
 .nav-btn[href="/signup"]:hover {
   background: #e68900;
 }
 
+/* Logout button */
+.nav-btn[href="/logout"] {
+  background: red;
+  color: #fff;
+}
 .nav-btn[href="/logout"]:hover {
   background: rgb(232, 33, 33);
 }
 
-/* Responsive */
+/* =========================
+   Profile (Navbar)
+   ========================= */
+.profile-menu {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.profile-pic {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid #ff9800;
+  object-fit: cover;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.profile-pic:hover {
+  transform: scale(1.1);
+  border-color: #ffa733;
+}
+
+/* =========================
+   Sidebar Styles
+   ========================= */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -280px; /* Hidden initially */
+  width: 260px;
+  height: 100%;
+  background: #1e2a38;
+  color: #fff;
+  padding: 25px 20px;
+  transition: right 0.4s ease-in-out;
+  z-index: 1200;
+  box-shadow: -2px 0 12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.sidebar.active {
+  right: 0;
+}
+
+/* Sidebar header */
+.sidebar-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sidebar-pic {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: 2px solid #ff9800;
+  object-fit: cover;
+}
+
+#sidebarUploadForm:hover{
+  cursor: pointer;
+}
+
+.close-btn {
+  font-size: 30px;
+  cursor: pointer;
+  color: #fff;
+  transition: 0.3s;
+}
+.close-btn:hover {
+  color: #ff0000;
+}
+
+/* User email */
+.sidebar h3 {
+  margin: 15px 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: #ddd;
+  word-break: break-word;
+}
+
+/* Sidebar links */
+.sidebar ul {
+  list-style: none;
+  width: 100%;
+  padding: 0;
+  margin-top: 25px;
+}
+.sidebar ul li {
+  margin: 15px 0;
+}
+.sidebar ul li a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 16px;
+  color: #eee;
+  border-radius: 6px;
+  transition: background 0.3s, color 0.3s;
+}
+.sidebar ul li a:hover {
+  background: #ff9800;
+  color: #fff;
+}
+.sidebar ul li a[href='/logout']:hover{
+  background: #ff0000;
+  color: #fff;
+}
+
+/* =========================
+   Overlay (when sidebar opens)
+   ========================= */
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  z-index: 1150;
+}
+.overlay.active {
+  display: block;
+}
+
+/* =========================
+   Responsive
+   ========================= */
 @media (max-width: 768px) {
-  .navbar {
-    flex-wrap: wrap;
-  }
-
   .nav-links {
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-    text-align: center;
-    margin-top: 1rem;
-    display: none; /* initially hidden */
-  }
-
-  .navbar.active .nav-links {
-    display: flex;
-  }
-
-  .nav-btn {
-    margin: 0.5rem 0;
+    display: none; /* hide links on mobile */
   }
 }
+

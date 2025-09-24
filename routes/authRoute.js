@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt")
 
 function generateToken(user) {
   return jwt.sign(
-    { id: user._id, email: user.email, role: user.role, pickup: user.pickup },
+    { id: user._id, email: user.email, role: user.role, image: user.image, pickup: user.pickup },
     process.env.SECRET,
     { expiresIn: "1h" }
   );
@@ -14,11 +14,11 @@ function generateToken(user) {
 let router = express.Router()
 
 router.get('/signup', (req, res) => {
-  res.render("signup", { title: "TrackOn | Signup", user: null, form:"nav-bg" })
+  res.render("signup", { title: "TrackOn | Signup", user: null, form: "nav-bg" })
 })
 
 router.get('/login', (req, res) => {
-  res.render("login", { title: "TrackOn | Login", user: null, form:"nav-bg" })
+  res.render("login", { title: "TrackOn | Login", user: null, form: "nav-bg" })
 })
 
 router.post("/signup", async (req, res) => {
@@ -27,11 +27,11 @@ router.post("/signup", async (req, res) => {
     let existingUser = await userModel.findOne({ email, role });
 
     if (existingUser) {
-      return res.render("signup", { title: "TrackOn | Signup",user: null, form:"nav-bg" });
+      return res.render("signup", { title: "TrackOn | Signup", user: null, form: "nav-bg" });
     }
 
     if (password !== confirmPassword) {
-      return res.render("signup", { title: "TrackOn | Signup", user: null, form:"nav-bg" });
+      return res.render("signup", { title: "TrackOn | Signup", user: null, form: "nav-bg" });
     }
 
     let hashedPassword = await bcrypt.hash(password, 10);
@@ -55,7 +55,7 @@ router.post("/signup", async (req, res) => {
 
   } catch (error) {
     console.error("Signup error:", error);
-    return res.render("signup", { title: "TrackOn | Signup", user: null, form:"nav-bg" });
+    return res.render("signup", { title: "TrackOn | Signup", user: null, form: "nav-bg" });
   }
 });
 
@@ -80,12 +80,6 @@ router.post("/login", async (req, res) => {
       sameSite: "strict",
       maxAge: 60 * 60 * 1000,
     });
-    res.cookie("user", existingUser.role, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "strict",
-      maxAge: 60 * 60 * 1000,
-    });
 
     if (existingUser.role == "user" && role == "user") return res.redirect("/user/dashboard")
     if (existingUser.role == "driver" && role == "driver") return res.redirect("/driver/dashboard")
@@ -94,13 +88,12 @@ router.post("/login", async (req, res) => {
 
   } catch (error) {
     console.error("Signup error:", error);
-    return res.render("login", { title: "TrackOn | Login", user: null, form:"nav-bg" });
+    return res.render("login", { title: "TrackOn | Login", user: null, form: "nav-bg" });
   }
 })
 
 router.get("/logout", (req, res) => {
   res.clearCookie("token");
-  res.clearCookie("user");
   res.redirect("/");
 });
 
