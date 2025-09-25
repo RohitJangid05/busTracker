@@ -1,42 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('partials/head') %>
-<link rel="stylesheet" href="css/signup.css">
-    <body>
-        <%- include('partials/navbar')%>
-        <div class="main-form-container">
-            <div class="form-container">
-                <h2>Login</h2>
-                <form action="/login" method="POST">
+<link rel="stylesheet" href="/css/signup.css"> <!-- Reusing signup CSS -->
+<body>
+    <%- include('partials/navbar') %>
 
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" required />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" required />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="role">Select Role</label>
-                        <select id="role" name="role" required>
-                            <option value="" disabled selected>-- Select Role --</option>
-                            <option value="user">User</option>
-                            <option value="driver">Driver</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn">Login</button>
-
-                    <div class="footer-text">
-                        Don't have an account? <a href="/signup">Signup</a>
-                    </div>
-                </form>
-            </div>
+    <% if (alertMessage && alertMessage.length > 0) { %>
+        <div id="alert-message" class="alert-message">
+            <span><%= alertMessage[0] %></span>
+            <i class="fa-solid fa-xmark cancel-btn"></i>
         </div>
-        <%- include('partials/footer')  %> 
-    </body>
+    <% } %>
 
+    <div class="main-form-container">
+        <div class="form-container">
+            <h2>Login</h2>
+            <form action="/login" method="POST">
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Your Email" required />
+                </div>
+
+                <div class="form-group password-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="password" name="password" placeholder="Your Password" required />
+                        <i class="fa-solid fa-eye toggle-password"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Select Role</label>
+                    <select id="role" name="role" required>
+                        <option value="" disabled selected>-- Select Role --</option>
+                        <option value="user">User</option>
+                        <option value="driver">Driver</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn">Login</button>
+
+                <div class="footer-text">
+                    Don't have an account? <a href="/signup">Signup</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+
+    <!-- Alert message script -->
+    <script>
+        const alertBox = document.getElementById("alert-message");
+        const cancelBtn = document.querySelector(".cancel-btn");
+
+        if (alertBox) {
+            setTimeout(() => {
+                alertBox.classList.add("hide");
+                setTimeout(() => alertBox.remove(), 500);
+            }, 2500);
+
+            if (cancelBtn) {
+                cancelBtn.addEventListener("click", () => {
+                    alertBox.classList.add("hide");
+                    setTimeout(() => alertBox.remove(), 500);
+                });
+            }
+        }
+    </script>
+
+    <!-- Toggle password visibility -->
+    <script>
+        document.querySelectorAll('.toggle-password').forEach(icon => {
+            icon.addEventListener('click', () => {
+                const input = icon.previousElementSibling;
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.replace('fa-eye', 'fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.replace('fa-eye-slash', 'fa-eye');
+                }
+            });
+        });
+    </script>
+</body>
 </html>

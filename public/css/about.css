@@ -8,7 +8,7 @@
 .about-hero {
     height: 70vh;
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-        url('/images/abt-us-bg.jpg') no-repeat center center/cover;
+        url('https://ik.imagekit.io/jangidrohit/bus_app_profile_img/abt-us-bg.jpg?updatedAt=1758784749423') no-repeat center center/cover;
     display: flex;
     justify-content: center;
     align-items: center;

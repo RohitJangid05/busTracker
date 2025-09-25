@@ -27,7 +27,7 @@ let driverDashboard = async (req, res) => {
     });
 }
 
-let addBusDetails =async (req, res) => {
+let addBusDetails = async (req, res) => {
     let { id } = req.user;
     let { busNumber, stationName, time, status } = req.body;
     let formattedTime = convertTo12Hour(time);
@@ -51,6 +51,7 @@ let addBusDetails =async (req, res) => {
                 route: [route],
             });
         }
+        req.flash("alertMessage", "Bus details added sucessfully.");
         res.redirect("/driver/dashboard")
 
     } catch (err) {
@@ -69,7 +70,7 @@ let updateBusStatus = async (req, res) => {
 
         await busModel.findByIdAndUpdate(id, { $set: { busStatus, bookingStatus } },
             { new: true })
-
+        req.flash("alertMessage", "Bus details updated sucessfully.");
         res.redirect('/driver/dashboard')
     } catch (err) {
         console.error(err);
@@ -87,6 +88,7 @@ let updateBusRouteStatus = async (req, res) => {
             { $set: { "route.$.status": status } }
         );
 
+        req.flash("alertMessage", "Bus route status updated sucessfully.");
         res.redirect('/driver/dashboard')
     } catch (err) {
         console.error(err);
@@ -94,12 +96,13 @@ let updateBusRouteStatus = async (req, res) => {
     }
 }
 
-let deleteBus =async (req, res) => {
+let deleteBus = async (req, res) => {
     try {
         let { id } = req.params;
 
         await busModel.findByIdAndDelete(id)
 
+        req.flash("alertMessage", "Bus deleted sucessfully.");
         res.redirect('/driver/dashboard')
     } catch (err) {
         console.error(err);
@@ -107,7 +110,7 @@ let deleteBus =async (req, res) => {
     }
 }
 
-let deleteBusStation=async (req, res) => {
+let deleteBusStation = async (req, res) => {
     try {
         let { busId, routeId } = req.params;
 
@@ -117,6 +120,7 @@ let deleteBusStation=async (req, res) => {
             { new: true }
         );
 
+        req.flash("alertMessage", "station deleted sucessfully.");
         res.redirect('/driver/dashboard')
     } catch (err) {
         console.error(err);
@@ -124,4 +128,4 @@ let deleteBusStation=async (req, res) => {
     }
 }
 
-module.exports = {driverDashboard, addBusDetails, updateBusStatus, updateBusRouteStatus, deleteBus, deleteBusStation}
+module.exports = { driverDashboard, addBusDetails, updateBusStatus, updateBusRouteStatus, deleteBus, deleteBusStation }

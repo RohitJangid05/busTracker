@@ -16,7 +16,7 @@ let app = express()
 
 app.use(session({
   secret: process.env.SECRET,
-  resave: false,
+  resave: true,
   saveUninitialized: true
 }));
 
@@ -45,7 +45,6 @@ app.get('/', (req, res) => {
     }else{
         user = null
     }
-
     res.render("index", {title:"Trackon", user, form:"nav-bg"})
 })
 

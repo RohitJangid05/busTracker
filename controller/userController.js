@@ -4,6 +4,7 @@ let userModel = require("../model/userModel.js");
 let userDashboard = async (req, res) => {
     let buses = await busModel.find({});
     let user = req.user
+
     buses.forEach(bus => {
         bus.route.sort((a, b) => {
             let timeA = new Date("1970/01/01 " + a.time);
@@ -11,6 +12,15 @@ let userDashboard = async (req, res) => {
             return timeA - timeB;
         });
     });
+
+    buses.sort((a, b) => {
+        let isBusABlocked = a.busStatus === "canceled" || !a.bookingStatus;
+        let isBusBBlocked = b.busStatus === "canceled" || !b.bookingStatus;
+
+        if (isBusABlocked === isBusBBlocked) return 0; 
+        return isBusABlocked ? 1 : -1;
+    });
+
 
     res.render("userDashboard", {
         title: "TrackOn | User Dashboard",
@@ -51,12 +61,14 @@ let addPickup = async (req, res) => {
             return res.redirect('/user/dashboard')
         }
 
-        if (route.stationName === bus.route.at(-1).stationName) {
+        if (bus.busStatus == "cancelled") {
+            req.flash("alertMessage", "Sorry for the inconvenience, the bus has been canceled.");
+        } else if (!bus.bookingStatus) {
+            req.flash("alertMessage", "No more booking is accepted");
+        } else if (route.stationName === bus.route.at(-1).stationName) {
             req.flash("alertMessage", "Last Stop, Bus ends here, cannot mark this as pickup");
         } else if (route.status !== "next") {
             req.flash("alertMessage", "Please mark your pickup point on the next station");
-        } else if (!bus.bookingStatus) {
-            req.flash("alertMessage", "No more booking is accepted");
         } else if (bus.busStatus == "cancelled") {
             req.flash("alertMessage", "Sorry, you cannot book as this bus is cancelled");
         } else {

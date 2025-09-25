@@ -9,24 +9,41 @@ let uploadProfileImage = async (req, res) => {
 
     const { _id, role } = req.user;
 
+    const user = await User.findById(_id);
+
+    if (user?.imageFileId) {
+      try {
+        await imagekit.deleteFile(user.imageFileId);
+      } catch (deleteErr) {
+        console.warn("Failed to delete old profile image:", deleteErr.message);
+      }
+    }
+
     const response = await imagekit.upload({
       file: req.file.buffer,
-      fileName: req.file.originalname,
+      fileName: `${_id}_profile.webp`,
       folder: "/bus_app_profile_img",
-      useUniqueFileName: true
+      useUniqueFileName: false,
+      overwriteFile: true,
     });
 
+    // Add version param to avoid caching issues
+    const imageURL =
+      imagekit.url({
+        src: response.url,
+        transformation: [
+          { width: "500" },
+          { quality: "auto" },
+          { format: "webp" },
+        ],
+      }) + `?v=${Date.now()}`;
 
-    const imageURL = imagekit.url({
-      src: response.url,
-      transformation: [
-        { width: "500" },
-        { quality: "auto" },
-        { format: "webp" }
-      ]
-    });
-
-    await User.findByIdAndUpdate(_id, { image: imageURL }, { new: true });
+    // Save updated image + fileId
+    await User.findByIdAndUpdate(
+      _id,
+      { image: imageURL, imageFileId: response.fileId },
+      { new: true }
+    );
 
     res.redirect(`/${role}/dashboard`);
   } catch (err) {

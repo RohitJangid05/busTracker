@@ -7,7 +7,7 @@
 
 .hero {
   height: 100vh;
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/images/bus-bg.jpeg') no-repeat center center/cover;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://ik.imagekit.io/jangidrohit/bus_app_profile_img/bus-bg.jpeg?updatedAt=1758784246281') no-repeat center center/cover;
   display: flex;
   justify-content: center;
   align-items: center;

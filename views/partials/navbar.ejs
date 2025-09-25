@@ -2,7 +2,8 @@
 <link rel="stylesheet" href="/css/style.css">
 <nav class="navbar <%= form==="nav-bg"?"navbar-bg-img":"nav-bg" %>">
   <a href="/" class="logo ">TrackOn</a>
-  <% if(form=="nav-bg" ){ %>
+  
+  <% if(form=="nav-bg" && !user ){ %>
     <ul class="nav-links">
       <li><a href="/">Home</a></li>
       <li><a href="/about">About</a></li>
@@ -12,42 +13,45 @@
     <% } %>
 
       <% if(user){ %>
-          <div class="profile-menu">
-            <img src="<%= user.image || '/images/default-profile.png' %>" alt="Profile" class="profile-pic"
-              onclick="toggleSidebar()" />
+        <div class="profile-menu">
+          <img src="<%= user.image || '/images/default-profile.png' %>" alt="Profile" class="profile-pic"
+            onclick="toggleSidebar()" />
+        </div>
+        <% }else{ %>
+          <div>
+            <a href="/login" class="nav-btn">Login</a>
+            <a href="/signup" class="nav-btn">Singup</a>
           </div>
-          <% }else{ %>
-            <div>
-              <a href="/login" class="nav-btn">Login</a>
-              <a href="/signup" class="nav-btn">Singup</a>
-            </div>
-            <% } %>
+          <% } %>
 
-              <% if(user){ %>
+            <% if(user){ %>
 
               <div id="sidebar" class="sidebar">
-  <div class="sidebar-header">
-    <!-- Sidebar profile upload form -->
-    <form id="sidebarUploadForm"  action="/<%= user.role %>/upload-profile" method="POST" enctype="multipart/form-data">
-      <input type="file" name="image" id="sidebarProfileInput" style="display:none" accept="image/*" onchange="document.getElementById('sidebarUploadForm').submit()" />
-      <img src="<%= user.image || '/images/default-profile.png' %>" 
-           alt="Profile" 
-           class="sidebar-pic" 
-           onclick="document.getElementById('sidebarProfileInput').click()" />
-    </form>
-    <span class="close-btn" onclick="toggleSidebar()">&times;</span>
-  </div>
+                <div class="sidebar-header">
+                  <!-- Sidebar profile upload form -->
+                  <form id="sidebarUploadForm" action="/<%= user.role %>/upload-profile" method="POST"
+                    enctype="multipart/form-data">
+                    <input type="file" name="image" id="sidebarProfileInput" style="display:none" accept="image/*"
+                      onchange="document.getElementById('sidebarUploadForm').submit()" />
+                    <img src="<%= user.image || '/images/default-profile.png' %>" alt="Profile" class="sidebar-pic"
+                      onclick="document.getElementById('sidebarProfileInput').click()" />
+                  </form>
+                  <span class="close-btn" onclick="toggleSidebar()">&times;</span>
+                </div>
 
-  <h3><%= user.email %></h3>
-  <ul>
-    <li><a href="/<%= user.role %>/dashboard">Dashboard</a></li>
-    <li><a href="/">Home</a></li>
-    <li><a href="/about">About</a></li>
-    <li><a href="/logout">Logout</a></li>
-  </ul>
-</div>
+                <h3>
+                  <%= user.email %>
+                </h3>
+                <hr style="width: 100%;">
+                <ul>
+                  <li><a href="/<%= user.role %>/dashboard">Dashboard</a></li>
+                  <li><a href="/">Home</a></li>
+                  <li><a href="/about">About</a></li>
+                  <li><a href="/logout">Logout</a></li>
+                </ul>
+              </div>
 
-                <% } %>
+              <% } %>
 </nav>
 
 <script>
