@@ -51,7 +51,7 @@ let addBusDetails = async (req, res) => {
                 route: [route],
             });
         }
-        req.flash("alertMessage", "Bus details added sucessfully.");
+        req.flash("alert", { text: "Bus details added sucessfully", class: "success" });
         res.redirect("/driver/dashboard")
 
     } catch (err) {
@@ -70,7 +70,7 @@ let updateBusStatus = async (req, res) => {
 
         await busModel.findByIdAndUpdate(id, { $set: { busStatus, bookingStatus } },
             { new: true })
-        req.flash("alertMessage", "Bus details updated sucessfully.");
+        req.flash("alert", { text: "Bus details updated sucessfully", class: "success" });
         res.redirect('/driver/dashboard')
     } catch (err) {
         console.error(err);
@@ -88,7 +88,7 @@ let updateBusRouteStatus = async (req, res) => {
             { $set: { "route.$.status": status } }
         );
 
-        req.flash("alertMessage", "Bus route status updated sucessfully.");
+        req.flash("alert", { text: "Bus route status updated sucessfully", class: "success" });
         res.redirect('/driver/dashboard')
     } catch (err) {
         console.error(err);
@@ -102,7 +102,7 @@ let deleteBus = async (req, res) => {
 
         await busModel.findByIdAndDelete(id)
 
-        req.flash("alertMessage", "Bus deleted sucessfully.");
+        req.flash("alert", { text: "Bus deleted successfully", class: "info" });
         res.redirect('/driver/dashboard')
     } catch (err) {
         console.error(err);
@@ -120,7 +120,7 @@ let deleteBusStation = async (req, res) => {
             { new: true }
         );
 
-        req.flash("alertMessage", "station deleted sucessfully.");
+        req.flash("alert", { text: "Station deleted successfully", class: "info" });
         res.redirect('/driver/dashboard')
     } catch (err) {
         console.error(err);

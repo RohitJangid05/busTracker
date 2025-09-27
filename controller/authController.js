@@ -16,12 +16,12 @@ let signUp = async (req, res) => {
         let existingUser = await userModel.findOne({ email, role });
 
         if (existingUser) {
-            req.flash("alertMessage", "User already exist");
+            req.flash("alert", { text: "User already exist", class: "error" });
             return res.redirect('/signup');
         }
 
         if (password !== confirmPassword) {
-            req.flash("alertMessage", "password and confirm password didn't matched");
+            req.flash("alert", { text: "Password and confirm password didn't matched", class: "error" });
             return res.redirect('/signup');
         }
 
@@ -56,13 +56,13 @@ let login = async (req, res) => {
         const existingUser = await userModel.findOne({ email, role });
 
         if (!existingUser) {
-            req.flash("alertMessage", "User is not authorized");
+            req.flash("alert", { text: "User is not authorized", class: "error" });
             return res.redirect('/login');
         }
 
         const isPasswordValid = await bcrypt.compare(password, existingUser.password);
         if (!isPasswordValid) {
-            req.flash("alertMessage", "Email or password is incorrect");
+            req.flash("alert", { text: "Incorrect mail or password", class: "error" });
             return res.redirect('/login');
         }
 
@@ -78,7 +78,7 @@ let login = async (req, res) => {
         if (existingUser.role === "user" && role === "user") return res.redirect("/user/dashboard");
         if (existingUser.role === "driver" && role === "driver") return res.redirect("/driver/dashboard");
 
-        req.flash("alertMessage", "Not authorized");
+        req.flash("alert", { text: "Not Authorized", class: "error" });
         return res.redirect("/login");
 
     } catch (error) {
@@ -86,7 +86,6 @@ let login = async (req, res) => {
         return res.render("login", { title: "TrackOn | Login", user: null, form: "nav-bg" });
     }
 };
-
 
 
 module.exports = { signUp, login }

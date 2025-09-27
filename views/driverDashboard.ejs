@@ -4,14 +4,12 @@
   <body>
     <%- include('partials/navbar') %>
 
-    <% if (alertMessage && alertMessage.length> 0) { %>
-        <div id="alert-message" class="alert-message">
-          <span>
-            <%= alertMessage[0] %>
-          </span>
-          <i class="fa-solid fa-xmark cancel-btn"></i>
-        </div>
-        <% } %>
+   <% if (alert) { %>
+  <div class="alert-message <%= alert.class %>">
+    <span><%= alert.text %></span>
+    <i class="fa-solid fa-xmark cancel-btn"></i>
+  </div>
+<% } %>
 
       <header>
         <h1>Driver Dashboard</h1>
@@ -144,21 +142,4 @@
       </div>
       <%- include('partials/footer') %>
   </body>
-  <script>
-  const alertBox = document.getElementById("alert-message");
-  const cancelBtn = document.querySelector(".cancel-btn");
-
-  if (alertBox) {
-    setTimeout(() => {
-      alertBox.classList.add("hide");
-      setTimeout(() => alertBox.remove(), 500);
-    }, 2500);
-
-    if (cancelBtn) {
-      cancelBtn.addEventListener("click", () => {
-        alertBox.classList.add("hide");
-        setTimeout(() => alertBox.remove(), 500);
-      });
-    }
-  }
-</script>
+<script src="/js/alert.js"></script>

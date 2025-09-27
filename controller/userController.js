@@ -17,7 +17,7 @@ let userDashboard = async (req, res) => {
         let isBusABlocked = a.busStatus === "canceled" || !a.bookingStatus;
         let isBusBBlocked = b.busStatus === "canceled" || !b.bookingStatus;
 
-        if (isBusABlocked === isBusBBlocked) return 0; 
+        if (isBusABlocked === isBusBBlocked) return 0;
         return isBusABlocked ? 1 : -1;
     });
 
@@ -57,23 +57,22 @@ let addPickup = async (req, res) => {
                 { $unset: { pickup: "" } },
                 { new: true }
             );
-            req.flash("alertMessage", "Pickup point removed");
+            req.flash("alert", { text: "Pickup point removed.", class: "info" });
             return res.redirect('/user/dashboard')
         }
 
         if (bus.busStatus == "cancelled") {
-            req.flash("alertMessage", "Sorry for the inconvenience, the bus has been canceled.");
+            req.flash("alert", { text: "Sorry for the inconvenience, the bus has been canceled.", class: "error" });
         } else if (!bus.bookingStatus) {
-            req.flash("alertMessage", "No more booking is accepted");
+            req.flash("alert", { text: "No more booking is accepted", class: "warning" });
         } else if (route.stationName === bus.route.at(-1).stationName) {
-            req.flash("alertMessage", "Last Stop, Bus ends here, cannot mark this as pickup");
+            req.flash("alert", { text: "Last Stop, Bus ends here, cannot mark this as pickup", class: "warning" });
         } else if (route.status !== "next") {
-            req.flash("alertMessage", "Please mark your pickup point on the next station");
-        } else if (bus.busStatus == "cancelled") {
-            req.flash("alertMessage", "Sorry, you cannot book as this bus is cancelled");
+            req.flash("alert", { text: "Please mark your pickup point on the next station", class: "info" });
         } else {
-            req.flash("alertMessage", "Pickup point marked");
+            req.flash("alert", { text: "Pickup point marked", class: "success" });
         }
+
 
         if (route.status === "next" && bus.bookingStatus && route.stationName != bus.route.at(-1).stationName && bus.busStatus !== "cancelled") {
             await userModel.findByIdAndUpdate(

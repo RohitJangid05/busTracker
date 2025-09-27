@@ -7,7 +7,9 @@ let uploadProfileImage = async (req, res) => {
       return res.status(400).json({ message: "No file uploaded" });
     }
 
-    const { _id, role } = req.user;
+    const { _id, role, email } = req.user;
+    const imgName = email.replace("@gmail.com", "");
+
 
     const user = await User.findById(_id);
 
@@ -21,7 +23,7 @@ let uploadProfileImage = async (req, res) => {
 
     const response = await imagekit.upload({
       file: req.file.buffer,
-      fileName: `${_id}_profile.webp`,
+      fileName: `${imgName}_profile.webp`,
       folder: "/bus_app_profile_img",
       useUniqueFileName: false,
       overwriteFile: true,
@@ -37,6 +39,7 @@ let uploadProfileImage = async (req, res) => {
           { format: "webp" },
         ],
       }) + `?v=${Date.now()}`;
+
 
     // Save updated image + fileId
     await User.findByIdAndUpdate(

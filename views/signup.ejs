@@ -1,102 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('partials/head') %>
-<link rel="stylesheet" href="/css/signup.css">
-<body>
-    <%- include('partials/navbar') %>
+    <link rel="stylesheet" href="/css/signup.css">
 
-    <% if (alertMessage && alertMessage.length > 0) { %>
-        <div id="alert-message" class="alert-message">
-            <span><%= alertMessage[0] %></span>
-            <i class="fa-solid fa-xmark cancel-btn"></i>
-        </div>
-    <% } %>
+    <body>
+        <%- include('partials/navbar') %>
 
-    <div class="main-form-container">
-        <div class="form-container">
-            <h2>Signup</h2>
-            <form action="/signup" method="POST">
-
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" placeholder="Full Name" required />
+            <% if (alert) { %>
+                <div class="alert-message <%= alert.class %>">
+                    <span>
+                        <%= alert.text %>
+                    </span>
+                    <i class="fa-solid fa-xmark cancel-btn"></i>
                 </div>
+                <% } %>
 
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" placeholder="Your Email" required />
-                </div>
+                    <div class="main-form-container">
+                        <div class="form-container">
+                            <h2>Signup</h2>
+                            <form action="/signup" method="POST">
 
-                <div class="form-group password-group">
-                    <label for="password">Password</label>
-                    <div class="input-wrapper">
-                        <input type="password" id="password" name="password" placeholder="Password" required />
-                        <i class="fa-solid fa-eye toggle-password"></i>
+                                <div class="form-group">
+                                    <label for="name">Full Name</label>
+                                    <input type="text" id="name" name="name" placeholder="Full Name" required />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" id="email" name="email" placeholder="Your Email" required />
+                                </div>
+
+                                <div class="form-group password-group">
+                                    <label for="password">Password</label>
+                                    <div class="input-wrapper">
+                                        <input type="password" id="password" name="password" placeholder="Password"
+                                            required />
+                                        <i class="fa-solid fa-eye toggle-password"></i>
+                                    </div>
+                                </div>
+
+                                <div class="form-group password-group">
+                                    <label for="confirmPassword">Confirm Password</label>
+                                    <div class="input-wrapper">
+                                        <input type="password" id="confirmPassword" name="confirmPassword"
+                                            placeholder="Confirm Password" required />
+                                        <i class="fa-solid fa-eye toggle-password"></i>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="role">Select Role</label>
+                                    <select id="role" name="role" required>
+                                        <option value="" disabled selected>-- Select Role --</option>
+                                        <option value="user">User</option>
+                                        <option value="driver">Driver</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="btn">Signup</button>
+
+                                <div class="footer-text">
+                                    Already have an account? <a href="/login">Login</a>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group password-group">
-                    <label for="confirmPassword">Confirm Password</label>
-                    <div class="input-wrapper">
-                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required />
-                        <i class="fa-solid fa-eye toggle-password"></i>
-                    </div>
-                </div>
+        <%- include('partials/footer') %>
 
-                <div class="form-group">
-                    <label for="role">Select Role</label>
-                    <select id="role" name="role" required>
-                        <option value="" disabled selected>-- Select Role --</option>
-                        <option value="user">User</option>
-                        <option value="driver">Driver</option>
-                    </select>
-                </div>
+        <!-- Alert message script -->
+        <script src="/js/alert.js"></script>
 
-                <button type="submit" class="btn">Signup</button>
+        <!-- Toggle password visibility -->
+        <script src="/js/tooglePassword.js"></script>
+    </body>
 
-                <div class="footer-text">
-                    Already have an account? <a href="/login">Login</a>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <%- include('partials/footer') %>
-
-    <!-- Alert message script -->
-    <script>
-    const alertBox = document.getElementById("alert-message");
-    const cancelBtn = document.querySelector(".cancel-btn");
-
-    if (alertBox) {
-        setTimeout(() => {
-            alertBox.classList.add("hide");
-            setTimeout(() => alertBox.remove(), 500);
-        }, 2500);
-
-        if (cancelBtn) {
-            cancelBtn.addEventListener("click", () => {
-                alertBox.classList.add("hide");
-                setTimeout(() => alertBox.remove(), 500);
-            });
-        }
-    }
-    </script>
-
-    <!-- Toggle password visibility -->
-    <script>
-    document.querySelectorAll('.toggle-password').forEach(icon => {
-        icon.addEventListener('click', () => {
-            const input = icon.previousElementSibling;
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.replace('fa-eye', 'fa-eye-slash');
-            } else {
-                input.type = 'password';
-                icon.classList.replace('fa-eye-slash', 'fa-eye');
-            }
-        });
-    });
-    </script>
-</body>
 </html>

@@ -29,9 +29,10 @@ app.use(cookieParser())
 app.use(flash());
 
 app.use((req, res, next) => {
-  res.locals.alertMessage = req.flash("alertMessage");
+  res.locals.alert = req.flash("alert")[0]; // one object
   next();
 });
+
 
 app.use('/', authRoute)
 app.use("/user",userRoute)
